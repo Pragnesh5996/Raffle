@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block head_css %}
+{% endblock head_css %}
+
+{% block head_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{% endblock head_scripts %}
+
+{% block content %}
+<div>
+    <ul class="Polaris-List">
+        {% for x in product %}
+        <li class="Polaris-List__Item" id="{{x.id}}">{{x.title}}</li>
+        <div>
+            <ul class="Polaris-List">
+                {% for v in x.variants %}
+                <form method="GET" action="raffle">
+                <input type="hidden" id="product" name="product" value="{{x.id}}" />
+                <input type="hidden" id="variant" name="variant" value="{{v.variant_id}}" />
+                <li class="Polaris-List__Item" id="{{v.variant_id}}">{{v.variant_title}}<button type="submit" name="raffle" id="raffle" >Raffle</button></li> 
+                </form>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- </form> -->
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    <nav class="Polaris-Pagination" aria-label="Pagination">
+    {% if product.paginator.num_pages > 1 %}
+  
+      {% if product.has_previous %}
+  
+      <button type="button" class="Polaris-Pagination__Button Polaris-Pagination__PreviousButton" aria-label="Previous">
+       <a href="?page={{ product.previous_page_number }}"> <span class="Polaris-Icon">
+          <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+          <path d="M17 9H5.414l3.293-3.293a.999.999 0 1 0-1.414-1.414l-5 5a.999.999 0 0 0 0 1.414l5 5a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L5.414 11H17a1 1 0 1 0 0-2z"></path>
+       </svg>
+       </span>
+       </a>
+       </button>
+  
+      {% endif %}
+  
+      <span>Page {{ product.number }} of {{ product.paginator.num_pages }}</span>
+  
+      {% if product.has_next %}
+  
+      <button type="button" class="Polaris-Pagination__Button Polaris-Pagination__NextButton" aria-label="Next">
+       <a href="?page={{ product.next_page_number }}">
+          <span class="Polaris-Icon">
+             <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+                <path d="M17.707 9.293l-5-5a.999.999 0 1 0-1.414 1.414L14.586 9H3a1 1 0 1 0 0 2h11.586l-3.293 3.293a.999.999 0 1 0 1.414 1.414l5-5a.999.999 0 0 0 0-1.414z"></path>
+             </svg>
+          </span>
+          </a>
+       </button>
+  
+      {% endif %}
+  
+  {% endif %}
+ </nav>
+</div>      
+{% endblock content %}
+
+{% block body_scripts %}
+<!-- <script>
+    function call_ajax(variantid, productid){
+        console.log(variantid, "variant");
+        console.log(productid, "product");
+        $.ajax({
+            type:'GET',
+            url: 'raffle',
+            data: {'variantid': variantid, 'productid':productid},
+            success: function(response){
+                if (response.length > 0){
+                    window.location.href = 'raffle'
+                }   
+            }
+        })
+    }
+</script> -->
+{% endblock body_scripts %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head_css %}
+{% endblock head_css %}
+
+{% block head_scripts %}
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+{% endblock head_scripts %}
+
+{% block content %}
+<form method="POST" action="raffle">
+    {% csrf_token %}
+    <input type="text" id="get_product" name="get_product" value="{{product}}" hidden />
+    <input type="text" id="get_variant" name="get_variant" value="{{variant}}" hidden />
+    <table>
+        <tr>
+            <td><label for="startdate">Startdate:</label></td>
+            <td><input type="datetime-local" id="startdate" name="startdate"></td>
+        </tr>
+        <tr>
+            <td><label for="enddate">Enddate:</label></td>
+            <td><input type="datetime-local" id="enddate" name="enddate"></td>
+        </tr>
+        <tr>
+            <td><label for="content">Content:</label></td>
+            <td><textarea id="content" name="content" rows="4" cols="50"></textarea></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="checkbox" name="automatic" id="automatic" value="true">
+            <label for="automatic" class="cr">Choose Winner Automatically!</label></input></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit" name="btn_raffle" id="btn_raffle">Raffle</button></td>
+        </tr>
+    </table>
+</form>
+{% endblock content %}
+
+{% block body_scripts %}
+{% endblock body_scripts %}

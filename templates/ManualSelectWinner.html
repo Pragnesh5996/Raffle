@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Document</title> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var quantity = $('#variant_quantity').val();
+            $('input[type=checkbox]').on('change', function (e) {
+                if ($('input[type=checkbox]:checked').length > quantity) {
+                    $(this).prop('checked', false);
+                    alert("allowed only "+ quantity);
+                }
+            });
+
+            $('#btn_submit').on('click', function() {
+                var WinnerArr = [];
+                var LoserArr = [];
+
+                $('input[type=checkbox]').each(function() {
+                    if (this.checked) {
+                        WinnerArr.push($(this).val());
+                    }
+                    else {
+                        LoserArr.push($(this).val());
+                    }
+                });
+
+                console.log(WinnerArr);
+                console.log(LoserArr);
+                $.ajax({
+                    type: "POST",
+                    url: "/SelectWinnerManually",
+                    data: {
+                        'winnerList': WinnerArr,
+                        'loserList': LoserArr,
+                        'raffle': $('#raffle_id').val()
+                    },
+                    success: function (response) {
+                        alert(response);
+                    }
+                });
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <input type="hidden" name="variant_quantity" id="variant_quantity" value="{{quantity}}"/>
+    <input type="hidden" name="raffle_id" id="raffle_id" value="{{raffle_id}}"/>
+    <h3>Choose Winner from below list</h3>
+    <table id="subscriber_table">
+        <tr>
+            <th>Subscriber_id</th>
+            <th>Subscriber_name</th>
+            <th>Subscriber_email</th>
+            <th>Subscriber_phone</th>
+            <th>Select</th>
+        </tr>
+        {% for y in subscribers.subscribers %}
+        <tr>
+            <td>{{y.id}}</td>
+            <td>{{y.fullname}}</td>
+            <td>{{y.email}}</td>
+            <td>{{y.phone}}</td>
+            <td><input class='mycxk' type="checkbox" id="subscribers" value="{{y.id}}"/></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <input type="submit" name="btn_submit" id="btn_submit" value="Submit" />
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head_css %}
+<style>
+    .Polaris-Frame__Main {
+        padding-left: 0rem !important;
+        padding-left: 0rem !important;
+        padding-left: calc(0rem + constant(safe-area-inset-left)) !important;
+        padding-left: calc(0rem + env(safe-area-inset-left)) !important;
+    }
+</style>
+{% endblock head_css %}
+
+{% block head_scripts %}
+<script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+{% endblock head_scripts %}
+
+{% block content %}
+<h1>Create Winner Email</h1>
+<form action="WinnerEmailTemplate" method="post" style="max-width: 100%;width: 900px;">
+    {% csrf_token %}
+    <input type="hidden" id="raffle_id" name="raffle_id" value="{{raffle_id}}"/>
+    <textarea name="content" id="editor">
+        
+    </textarea>
+    <p><input type="submit" value="Submit"></p>
+</form>
+{% endblock content %}
+
+{% block body_scripts %}
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+{% endblock body_scripts %}

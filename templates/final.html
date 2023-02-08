@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head_css %}
+{% endblock head_css %}
+
+{% block head_scripts %}
+{% endblock head_scripts %}
+
+{% block content %}
+<div style="display:block">
+    <div style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;">
+    <div class="Polaris-EmptyState Polaris-EmptyState--withinPage">
+        <div class="Polaris-EmptyState__Section">
+        <div class="Polaris-EmptyState__DetailsContainer">
+            <div class="Polaris-EmptyState__Details">
+            <div class="Polaris-TextContainer">
+                <div class="Polaris-EmptyState__Content">
+                    {{ data }}
+                </div>
+            </div>
+            <div class="Polaris-EmptyState__Actions">
+                <div class="Polaris-Stack Polaris-Stack--alignmentCenter">
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="Polaris-EmptyState__ImageContainer"><img src="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg" role="presentation" alt="" class="Polaris-EmptyState__Image"></div>
+        </div>
+    </div>
+    <div id="PolarisPortalsContainer"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block body_scripts %}
+
+{% endblock body_scripts %}

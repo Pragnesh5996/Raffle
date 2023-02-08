@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block head_css %}
+<style>
+.Polaris-Frame--hasNav .Polaris-Frame__Main {
+    padding-left: calc(0rem + env(safe-area-inset-left)) !important;
+}
+.Polaris-DataTable__Cell.Polaris-DataTable__Cell--verticalAlignTop.Polaris-DataTable__Cell--numeric{
+    text-align: left !important;
+}
+</style>
+{% endblock head_css %}
+
+{% block head_scripts %}
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+{% endblock head_scripts %}
+
+{% block content %}
+<div>
+    <div class="Polaris-Page">
+        <!-- Table1 for Upcoming Raffle -->
+      <div class="Polaris-Page-Header Polaris-Page-Header--isSingleRow Polaris-Page-Header--mobileView Polaris-Page-Header--noBreadcrumbs Polaris-Page-Header--mediumTitle">
+        <div class="Polaris-Page-Header__Row">
+          <div class="Polaris-Page-Header__TitleWrapper">
+            <div>
+              <div class="Polaris-Header-Title__TitleAndSubtitleWrapper">
+                <h1 class="Polaris-Header-Title">Upcoming Raffle</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="Polaris-Page__Content">
+        <div class="Polaris-Card">
+          <div class="">
+            <div class="Polaris-DataTable__Navigation"><button class="Polaris-Button Polaris-Button--disabled Polaris-Button--plain Polaris-Button--iconOnly" aria-label="Scroll table left one column" type="button" disabled=""><span class="Polaris-Button__Content"><span class="Polaris-Button__Icon"><span class="Polaris-Icon"><svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+                        <path d="M12 16a.997.997 0 0 1-.707-.293l-5-5a.999.999 0 0 1 0-1.414l5-5a.999.999 0 1 1 1.414 1.414L8.414 10l4.293 4.293A.999.999 0 0 1 12 16z"></path>
+                      </svg></span></span></span></button><button class="Polaris-Button Polaris-Button--plain Polaris-Button--iconOnly" aria-label="Scroll table right one column" type="button"><span class="Polaris-Button__Content"><span class="Polaris-Button__Icon"><span class="Polaris-Icon"><svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+                        <path d="M8 16a.999.999 0 0 1-.707-1.707L11.586 10 7.293 5.707a.999.999 0 1 1 1.414-1.414l5 5a.999.999 0 0 1 0 1.414l-5 5A.997.997 0 0 1 8 16z"></path>
+                      </svg></span></span></span></button></div>
+            <div class="Polaris-DataTable">
+              <div class="Polaris-DataTable__ScrollContainer">
+                <table class="Polaris-DataTable__Table">
+                  <thead>
+                    <tr>
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn Polaris-DataTable__Cell--total" scope="col">Raffle Start</td>
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--total" scope="col">Raffle End</td>
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--total" scope="col">Raffle Content</td>
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--total Polaris-DataTable__Cell--numeric" scope="col">Raffle Status</td>
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--total Polaris-DataTable__Cell--numeric" scope="col">WinnerEmail</td>
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--total Polaris-DataTable__Cell--numeric" scope="col">LoserEmail</td>
+                    </tr>
+                    <!-- Ongoing Raffle Header -->
+                  </thead>
+                  <tbody>
+                    {% if upcoming|length > 0 %}
+                    {% for x in upcoming %}
+                    <tr class="Polaris-DataTable__TableRow Polaris-DataTable--hoverable">
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn">{{x.raffle_start}}</td>
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">{{x.raffle_end}}</td>
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">{{x.raffle_content}}</td>
+                      {% if x.raffle_is_new == None %}
+                      <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">Coming Soon</td>
+                      {% endif %}
+                      <form method="GET" action="UpcomingWinnerEmail">
+                        <input type="hidden" id="raffle_id" name="raffle_id" value="{{x.raffle_id}}" />
+                        <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric"><button type="submit" id="WinnerEmail">Set WinnerEmail</button></td>
+                      </form>
+                      <form method="GET" action="UpcomingLoserEmail">
+                        <input type="hidden" id="raffle_id" name="raffle_id" value="{{x.raffle_id}}" />
+                        <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric"><button type="submit" id="WinnerEmail">Set LoserEmail</button></td>
+                      </form>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                    <!-- Ongoing Raffle Body -->
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% for x in upcoming %}
+      <div style="text-align: center !important;">
+          <nav class="Polaris-Pagination" aria-label="Pagination">
+          {% if upcoming.paginator.num_pages > 1 %}
+      
+          {% if upcoming.has_previous %}
+      
+          <button type="button" class="Polaris-Pagination__Button Polaris-Pagination__PreviousButton" aria-label="Previous">
+          <a href="?page={{ upcoming.previous_page_number }}"> <span class="Polaris-Icon">
+              <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+              <path d="M17 9H5.414l3.293-3.293a.999.999 0 1 0-1.414-1.414l-5 5a.999.999 0 0 0 0 1.414l5 5a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L5.414 11H17a1 1 0 1 0 0-2z"></path>
+          </svg>
+          </span>
+          </a>
+          </button>
+      
+          {% endif %}
+      
+          <span>Page {{ upcoming.number }} of {{ upcoming.paginator.num_pages }}</span>
+      
+          {% if upcoming.has_next %}
+      
+          <button type="button" class="Polaris-Pagination__Button Polaris-Pagination__NextButton" aria-label="Next">
+          <a href="?page={{ upcoming.next_page_number }}">
+              <span class="Polaris-Icon">
+                  <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+                      <path d="M17.707 9.293l-5-5a.999.999 0 1 0-1.414 1.414L14.586 9H3a1 1 0 1 0 0 2h11.586l-3.293 3.293a.999.999 0 1 0 1.414 1.414l5-5a.999.999 0 0 0 0-1.414z"></path>
+                  </svg>
+              </span>
+              </a>
+          </button>
+      
+          {% endif %}
+          {% endif %}
+          </nav>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block body_scripts %}
+
+{% endblock body_scripts %}
